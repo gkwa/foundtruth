@@ -65,6 +65,9 @@ def fib(n):
     Returns:
       int: n-th Fibonacci number
     """
+    if n == 0:
+        return 0
+
     assert n > 0
     a, b = 1, 1
     for _i in range(n - 1):

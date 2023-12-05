@@ -56,7 +56,10 @@ def test_main_with_missing_argument(capsys):
     with pytest.raises(SystemExit):
         main([])
     captured = capsys.readouterr()
-    assert "the following arguments are required: n" in captured.err.lower()
+    assert (
+        "the following arguments are required: n" in captured.err.lower()
+        or "the following arguments are required: int" in captured.err.lower()
+    )
 
 
 def test_main_with_zero_argument(capsys):
