@@ -27,10 +27,17 @@ def test_main(capsys):
 
 def test_main_with_invalid_argument(capsys):
     """Test CLI with an invalid argument"""
-    with pytest.raises(SystemExit):
+    with pytest.raises(SystemExit) as e:
         main(["invalid_argument"])
+
+    assert e.value.code == 2
+
+    # Check the captured output for the expected error message
     captured = capsys.readouterr()
-    assert "error: unrecognized arguments" in captured.err.lower()
+    assert (
+        "error: argument int: invalid int value: 'invalid_argument'"
+        in captured.err.lower()
+    )
 
 
 def test_main_with_verbose_flag(capsys):
