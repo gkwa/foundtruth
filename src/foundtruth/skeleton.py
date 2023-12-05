@@ -1,25 +1,3 @@
-"""
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
-``[options.entry_points]`` section in ``setup.cfg``::
-
-    console_scripts =
-         fibonacci = foundtruth.skeleton:run
-
-Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
-
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as a template for Python modules.
-
-Note:
-    This file can be renamed depending on your needs or safely removed if not needed.
-
-References:
-    - https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-    - https://pip.pypa.io/en/stable/reference/pip_install
-"""
-
 import argparse
 import logging
 import sys
@@ -34,26 +12,30 @@ __license__ = "MPL-2.0"
 _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
 
-# Set up a stream handler to print log messages to the console
-stream_handler = logging.StreamHandler(sys.stdout)
-stream_handler.setLevel(logging.DEBUG)  # Set the log level for this handler to DEBUG
 
-# Create a formatter with your desired log format
-log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
+def setup_logger():
+    """Set up the logger with a stream handler and formatter."""
+    # Set up a stream handler to print log messages to the console
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(
+        logging.DEBUG
+    )  # Set the log level for this handler to DEBUG
 
-# Attach the formatter to the handler
-stream_handler.setFormatter(formatter)
+    # Create a formatter with your desired log format
+    log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+    formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
 
-# Add the handler to the logger
-_logger.addHandler(stream_handler)
+    # Attach the formatter to the handler
+    stream_handler.setFormatter(formatter)
 
+    # Add the handler to the logger
+    _logger.addHandler(stream_handler)
+
+
+# Call the function to set up the logger at the package level
+setup_logger()
 
 # ---- Python API ----
-# The functions defined in this section can be imported by users in their
-# Python scripts/interactive interpreter, e.g. via
-# `from foundtruth.skeleton import fib`,
-# when using this Python module as a library.
 
 
 def fib(n):
@@ -76,9 +58,6 @@ def fib(n):
 
 
 # ---- CLI ----
-# The functions defined in this section are wrappers around the main Python
-# API allowing them to be called directly from the terminal as a CLI
-# executable/script.
 
 
 def parse_args(args):
@@ -128,19 +107,8 @@ def setup_logging(loglevel):
     # Clear existing handlers to avoid duplication during test runs
     _logger.handlers.clear()
 
-    # Set up a stream handler to print log messages to the console
-    stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setLevel(loglevel)  # Set the log level for this handler
-
-    # Create a formatter with your desired log format
-    log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
-
-    # Attach the formatter to the handler
-    stream_handler.setFormatter(formatter)
-
-    # Add the handler to the logger
-    _logger.addHandler(stream_handler)
+    # Call the function to set up the logger
+    setup_logger()
 
     _logger.debug("Logger set up with log level: %s", loglevel)
 
