@@ -1,4 +1,4 @@
-Purpose: have ChatGPT teach me how to use pytest to test cli
+Purpose: learn how to use pytest to test cli with args/without args/various combinations
 
 To test:
 
