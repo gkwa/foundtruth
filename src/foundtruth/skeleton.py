@@ -10,7 +10,7 @@ Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
 which will install the command ``fibonacci`` inside your current environment.
 
 Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
+also be used as a template for Python modules.
 
 Note:
     This file can be renamed depending on your needs or safely removed if not needed.
@@ -82,7 +82,7 @@ def parse_args(args):
     """Parse command line parameters
 
     Args:
-      args (List[str]): command line parameters as list of strings
+      args (List[str]): command line parameters as a list of strings
           (for example  ``["--help"]``).
 
     Returns:
@@ -120,13 +120,24 @@ def setup_logging(loglevel):
     Args:
       loglevel (int): minimum loglevel for emitting messages
     """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(
-        level=logging.DEBUG,  # Set the log level to DEBUG
-        stream=sys.stdout,
-        format=logformat,
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
+    # Clear existing handlers to avoid duplication during test runs
+    _logger.handlers.clear()
+
+    # Set up a stream handler to print log messages to the console
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(loglevel)  # Set the log level for this handler
+
+    # Create a formatter with your desired log format
+    log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+    formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
+
+    # Attach the formatter to the handler
+    stream_handler.setFormatter(formatter)
+
+    # Add the handler to the logger
+    _logger.addHandler(stream_handler)
+
+    _logger.debug("Logger set up with log level: %s", loglevel)
 
 
 def main(args):
@@ -136,7 +147,7 @@ def main(args):
     ``stdout`` in a nicely formatted message.
 
     Args:
-      args (List[str]): command line parameters as list of strings
+      args (List[str]): command line parameters as a list of strings
           (for example  ``["--verbose", "42"]``).
     """
     args = parse_args(args)
@@ -149,7 +160,8 @@ def main(args):
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
 
-    This function can be used as entry point to create console scripts with setuptools.
+    This function can be used as an entry point to create
+    console scripts with setuptools.
     """
     main(sys.argv[1:])
 
