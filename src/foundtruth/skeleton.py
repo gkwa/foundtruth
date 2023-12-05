@@ -121,7 +121,10 @@ def main(args):
           (for example  ``["--verbose", "42"]``).
     """
     args = parse_args(args)
-    setup_logging(args.loglevel)
+
+    # Set up logging to capture debug messages
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
+
     _logger.debug("Starting crazy calculations...")
     print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
     _logger.info("Script ends here")
