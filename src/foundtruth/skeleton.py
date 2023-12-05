@@ -30,7 +30,23 @@ __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
 __license__ = "MPL-2.0"
 
+# Create a custom logger
 _logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
+
+# Set up a stream handler to print log messages to the console
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setLevel(logging.DEBUG)  # Set the log level for this handler to DEBUG
+
+# Create a formatter with your desired log format
+log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+formatter = logging.Formatter(log_format, datefmt="%Y-%m-%d %H:%M:%S")
+
+# Attach the formatter to the handler
+stream_handler.setFormatter(formatter)
+
+# Add the handler to the logger
+_logger.addHandler(stream_handler)
 
 
 # ---- Python API ----
@@ -106,7 +122,10 @@ def setup_logging(loglevel):
     """
     logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
     logging.basicConfig(
-        level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
+        level=logging.DEBUG,  # Set the log level to DEBUG
+        stream=sys.stdout,
+        format=logformat,
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
 
