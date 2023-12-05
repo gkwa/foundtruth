@@ -17,9 +17,7 @@ def setup_logger():
     """Set up the logger with a stream handler and formatter."""
     # Set up a stream handler to print log messages to the console
     stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setLevel(
-        logging.DEBUG
-    )  # Set the log level for this handler to DEBUG
+    stream_handler.setLevel(logging.INFO)  # Set the log level for this handler to DEBUG
 
     # Create a formatter with your desired log format
     log_format = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
