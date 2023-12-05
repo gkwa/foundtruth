@@ -74,3 +74,16 @@ def test_main_with_large_argument(capsys):
     main(["10"])
     captured = capsys.readouterr()
     assert "The 10-th Fibonacci number is 55" in captured.out
+
+
+def test_main_with_multiple_values(capsys):
+    """Test CLI with multiple values as arguments"""
+    with pytest.raises(SystemExit) as e:
+        main(["3", "5", "8"])
+
+    # Check if the exit code indicates failure
+    assert e.value.code == 2
+
+    # Check the captured output for the expected error message
+    captured = capsys.readouterr()
+    assert "error: unrecognized arguments: 5 8" in captured.err.lower()

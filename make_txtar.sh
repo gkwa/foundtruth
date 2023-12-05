@@ -1,8 +1,6 @@
 rm -rf /tmp/foundtruth
-
 rm -f /tmp/foundtruth.tar
 rm -f /tmp/filelist.txt
-
 
 pytest >pytest.log 2>&1
 rg --no-ignore --files . |
