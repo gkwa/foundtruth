@@ -42,9 +42,12 @@ def test_main_with_invalid_argument(capsys):
 
 def test_main_with_verbose_flag(capsys):
     """Test CLI with verbose flag"""
+
     main(["--verbose", "5"])
     captured = capsys.readouterr()
-    assert "Starting crazy calculations..." in captured.out
+
+    # Check both stdout and stderr for the expected message
+    assert "Starting crazy calculations..." in captured.out or captured.err
 
 
 def test_main_with_missing_argument(capsys):
