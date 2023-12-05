@@ -102,6 +102,7 @@ def parse_args(args):
         help="set loglevel to INFO",
         action="store_const",
         const=logging.INFO,
+        default=logging.WARNING,  # Default to WARNING level if not specified
     )
     parser.add_argument(
         "-vv",
@@ -110,6 +111,7 @@ def parse_args(args):
         help="set loglevel to DEBUG",
         action="store_const",
         const=logging.DEBUG,
+        default=logging.WARNING,  # Default to WARNING level if not specified
     )
     return parser.parse_args(args)
 
