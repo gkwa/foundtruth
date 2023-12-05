@@ -4,5 +4,6 @@ To test:
 
 .. code-block:: shell
 
+    cd foundtruth
     pip install -e .[testing]
     pytest
