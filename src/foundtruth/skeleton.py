@@ -117,11 +117,11 @@ def main(args):
     ``stdout`` in a nicely formatted message.
 
     Args:
-      args (List[str]): command line parameters as a list of strings
-          (for example, ``["--verbose", "42"]``).
+      args (List[str]): command line parameters as list of strings
+          (for example  ``["--verbose", "42"]``).
     """
     args = parse_args(args)
-
+    setup_logging(args.loglevel)
     _logger.debug("Starting crazy calculations...")
     print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
     _logger.info("Script ends here")
